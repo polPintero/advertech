@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:advertech/components/input.dart';
 
 
 class LoginPage extends StatefulWidget {
@@ -19,9 +20,16 @@ class _LoginPageState extends State<LoginPage> {
         title: Text(widget.title),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[],
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 30.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Input(label: 'Name'),
+              Input(label: 'Email'),
+              Input(label: 'Message')
+            ],
+          ),
         ),
       ),
     );
