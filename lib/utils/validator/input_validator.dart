@@ -23,7 +23,6 @@ class InputValidator {
       result = element(value);
       if (result != '') break;
     }
-    print(result);
     return result == '' ? null : result;
   }
 }

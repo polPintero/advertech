@@ -3,10 +3,8 @@ import 'package:advertech/components/input.dart';
 import 'package:advertech/utils/validator/input_validator.dart';
 
 class LoginPage extends StatefulWidget {
-  LoginPage({super.key, required this.title});
+  LoginPage({super.key});
 
-  final String title;
-  String btnLabel = 'Send';
   bool isLoading = false;
   bool isSubmitBtnDisable = true;
 
@@ -17,12 +15,14 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final emailValidator =
-      InputValidator(steps: [InputValidator().require, InputValidator().email]);
-  final requireValidator =
-      InputValidator(steps: [InputValidator().require]);
   @override
   Widget build(BuildContext context) {
+    String labelBtn = widget.isLoading ? 'Please wait' : 'Send';
+    double gap = 20.0;
+    final emailValidator = InputValidator(
+        steps: [InputValidator().require, InputValidator().email]);
+    final requireValidator = InputValidator(steps: [InputValidator().require]);
+
     final formKeyName = GlobalKey<FormState>();
     final formKeyEmail = GlobalKey<FormState>();
     final formKeyMsg = GlobalKey<FormState>();
@@ -52,60 +52,84 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30.0),
-          child: Form(
-            // key: widget._formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Input(
-                  label: 'Name',
-                  defaultValue: widget.formData['name'].toString(),
-                  formKey: formKeyName,
-                  onFocusChange: onFocusChangeHandler,
-                  validator: requireValidator.stepByStep,
-                  onChanged: (value) {
-                    widget.formData['name'] = value;
-                  },
-                ),
-                Input(
-                  label: 'Email',
-                  defaultValue: widget.formData['email'].toString(),
-                  formKey: formKeyEmail,
-                  onFocusChange: onFocusChangeHandler,
-                  validator: emailValidator.stepByStep,
-                  onChanged: (value) {
-                    widget.formData['email'] = value;
-                  },
-                ),
-                Input(
-                  label: 'Message',
-                  defaultValue: widget.formData['message'].toString(),
-                  formKey: formKeyMsg,
-                  onFocusChange: onFocusChangeHandler,
-                  validator: requireValidator.stepByStep,
-                  onChanged: (value) {
-                    widget.formData['message'] = value;
-                  },
-                ),
-                ElevatedButton(
-                  child: widget.isLoading ? Text('Please wait') : Text('Send'),
-                  onPressed: widget.isSubmitBtnDisable
-                      ? null
-                      : () {
-                          widget.isLoading = true;
-                          setState(
-                            () {},
-                          );
-                        },
-                ),
-              ],
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 30.0),
+        child: ListView(
+          children: [
+            Form(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  const Text('Contact us',
+                      style:
+                          TextStyle(fontSize: 30, fontWeight: FontWeight.w800)),
+                  SizedBox(height: gap * 2),
+                  Input(
+                    label: 'Name',
+                    defaultValue: widget.formData['name'].toString(),
+                    formKey: formKeyName,
+                    onFocusChange: onFocusChangeHandler,
+                    validator: requireValidator.stepByStep,
+                    onChanged: (value) {
+                      widget.formData['name'] = value;
+                    },
+                  ),
+                  SizedBox(height: gap),
+                  Input(
+                    label: 'Email',
+                    defaultValue: widget.formData['email'].toString(),
+                    formKey: formKeyEmail,
+                    onFocusChange: onFocusChangeHandler,
+                    validator: emailValidator.stepByStep,
+                    onChanged: (value) {
+                      widget.formData['email'] = value;
+                    },
+                  ),
+                  SizedBox(height: gap),
+                  Input(
+                    label: 'Message',
+                    defaultValue: widget.formData['message'].toString(),
+                    formKey: formKeyMsg,
+                    onFocusChange: onFocusChangeHandler,
+                    validator: requireValidator.stepByStep,
+                    onChanged: (value) {
+                      widget.formData['message'] = value;
+                    },
+                  ),
+                  SizedBox(height: gap * 3),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStatePropertyAll<Color>(
+                            Colors.purple.shade200),
+                      ),
+                      onPressed: widget.isSubmitBtnDisable
+                          ? null
+                          : () {
+                              widget.isLoading = true;
+                              setState(
+                                () {},
+                              );
+                            },
+                      child: Padding(
+                        padding: EdgeInsets.all(gap),
+                        child: Text(
+                          labelBtn,
+                          style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 30,
+                              fontWeight: FontWeight.w800,
+                              letterSpacing: 2),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
+          ],
         ),
       ),
     );
