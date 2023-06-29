@@ -1,6 +1,6 @@
 # advertech
 
-A new Flutter project.
+![Screenshot_20230626_210248.png](demo.gif)
 
 # TASK DECRIPTION
 
