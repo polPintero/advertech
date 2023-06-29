@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:advertech/components/input.dart';
 import 'package:advertech/utils/validator/input_validator.dart';
+import 'package:advertech/utils/api.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({super.key});
@@ -107,11 +108,12 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       onPressed: widget.isSubmitBtnDisable
                           ? null
-                          : () {
+                          : () async {
                               widget.isLoading = true;
-                              setState(
-                                () {},
-                              );
+                              setState(() {});
+                               await api.sendLoginData(
+                                  widget.formData, context);
+                             
                             },
                       child: Padding(
                         padding: EdgeInsets.all(gap),
