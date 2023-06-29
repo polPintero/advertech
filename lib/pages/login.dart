@@ -30,14 +30,19 @@ class _LoginPageState extends State<LoginPage> {
 
     void submitBtnDisableSet() {
       widget.isSubmitBtnDisable = stateInputValidation.containsValue(false);
+      print(widget.isSubmitBtnDisable);
       if (!widget.isSubmitBtnDisable) {
         setState(() {});
       }
     }
 
-    void onChangedHandler(formKey) {
-      stateInputValidation[formKey] = formKey.currentState!.validate();
-      submitBtnDisableSet();
+    void onFocusChangeHandler(
+        FocusNode? focusNode, GlobalKey<FormState>? formKey) {
+      if (focusNode == null || formKey == null) return;
+      if (!focusNode.hasFocus) {
+        stateInputValidation[formKey] = formKey.currentState!.validate();
+        submitBtnDisableSet();
+      }
     }
 
     return Scaffold(
@@ -55,23 +60,29 @@ class _LoginPageState extends State<LoginPage> {
               children: <Widget>[
                 Input(
                   label: 'Name',
+                  defaultValue: widget.formData['name'].toString(),
                   formKey: formKeyName,
+                  onFocusChange: onFocusChangeHandler,
                   onChanged: (value) {
-                    onChangedHandler(formKeyName);
+                    widget.formData['name'] = value;
                   },
                 ),
                 Input(
                   label: 'Email',
+                  defaultValue: widget.formData['email'].toString(),
                   formKey: formKeyEmail,
+                  onFocusChange: onFocusChangeHandler,
                   onChanged: (value) {
-                    onChangedHandler(formKeyEmail);
+                    widget.formData['email'] = value;
                   },
                 ),
                 Input(
                   label: 'Message',
+                  defaultValue: widget.formData['message'].toString(),
                   formKey: formKeyMsg,
+                  onFocusChange: onFocusChangeHandler,
                   onChanged: (value) {
-                    onChangedHandler(formKeyMsg);
+                    widget.formData['message'] = value;
                   },
                 ),
                 ElevatedButton(
