@@ -16,6 +16,17 @@ class Input extends StatelessWidget {
         labelText: label,
         icon: Icon(Icons.lock_open),
       ),
+      validator: (String? value) {
+        dynamic validationResult = null;
+        final processValue = value?.trim();
+        if (processValue == null || processValue.isEmpty) {
+          validationResult = 'This field is required';
+        }
+
+        return validationResult;
+
+
+      },
     );
   }
 }
