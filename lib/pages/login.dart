@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:advertech/components/input.dart';
+import 'package:advertech/utils/validator/input_validator.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({super.key, required this.title});
@@ -16,6 +17,10 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final emailValidator =
+      InputValidator(steps: [InputValidator().require, InputValidator().email]);
+  final requireValidator =
+      InputValidator(steps: [InputValidator().require]);
   @override
   Widget build(BuildContext context) {
     final formKeyName = GlobalKey<FormState>();
@@ -30,7 +35,6 @@ class _LoginPageState extends State<LoginPage> {
 
     void submitBtnDisableSet() {
       widget.isSubmitBtnDisable = stateInputValidation.containsValue(false);
-      print(widget.isSubmitBtnDisable);
       if (!widget.isSubmitBtnDisable) {
         setState(() {});
       }
@@ -63,6 +67,7 @@ class _LoginPageState extends State<LoginPage> {
                   defaultValue: widget.formData['name'].toString(),
                   formKey: formKeyName,
                   onFocusChange: onFocusChangeHandler,
+                  validator: requireValidator.stepByStep,
                   onChanged: (value) {
                     widget.formData['name'] = value;
                   },
@@ -72,6 +77,7 @@ class _LoginPageState extends State<LoginPage> {
                   defaultValue: widget.formData['email'].toString(),
                   formKey: formKeyEmail,
                   onFocusChange: onFocusChangeHandler,
+                  validator: emailValidator.stepByStep,
                   onChanged: (value) {
                     widget.formData['email'] = value;
                   },
@@ -81,6 +87,7 @@ class _LoginPageState extends State<LoginPage> {
                   defaultValue: widget.formData['message'].toString(),
                   formKey: formKeyMsg,
                   onFocusChange: onFocusChangeHandler,
+                  validator: requireValidator.stepByStep,
                   onChanged: (value) {
                     widget.formData['message'] = value;
                   },

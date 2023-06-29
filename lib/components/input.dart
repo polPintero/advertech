@@ -9,6 +9,7 @@ class Input extends StatelessWidget {
     this.defaultValue = '',
     this.focusNode,
     this.onFocusChange,
+     this.validator,
   });
   final String label;
   final String type;
@@ -17,6 +18,7 @@ class Input extends StatelessWidget {
   final String defaultValue;
   final FocusNode? focusNode;
   final void Function(FocusNode?, GlobalKey<FormState>?)? onFocusChange;
+  final String? Function(String?)? validator;
 
   @override
   Widget build(BuildContext context) {
@@ -38,14 +40,7 @@ class Input extends StatelessWidget {
           icon: Icon(Icons.lock_open),
         ),
         onChanged: onChanged,
-        validator: (String? value) {
-          dynamic validationResult = null;
-          final processValue = value?.trim();
-          if (processValue == null || processValue.isEmpty) {
-            validationResult = 'This field is required';
-          }
-          return validationResult;
-        },
+        validator: validator,
       ),
     );
   }
