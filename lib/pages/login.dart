@@ -34,7 +34,7 @@ class _LoginPageState extends State<LoginPage> {
       formKeyMsg: false,
     };
 
-    void submitBtnDisableSet() {
+    void setDisableSubmitBtn() {
       widget.isSubmitBtnDisable = stateInputValidation.containsValue(false);
       if (!widget.isSubmitBtnDisable) {
         setState(() {});
@@ -46,7 +46,7 @@ class _LoginPageState extends State<LoginPage> {
       if (focusNode == null || formKey == null) return;
       if (!focusNode.hasFocus) {
         stateInputValidation[formKey] = formKey.currentState!.validate();
-        submitBtnDisableSet();
+        setDisableSubmitBtn();
       }
     }
 
